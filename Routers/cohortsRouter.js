@@ -43,17 +43,13 @@ cohortsRouter.get("/:id/students", (req, res) => {
                         : res.status(404).json({message: "The cohort with that ID does not contain any students."});
                 })
                 .catch(err =>
-                    res.status(500).json({
-                        error:
-                        "An error occurred while retrieving that cohort's students."
-                    })
+                    res.status(500).json({error:"An error occurred while retrieving that cohort's students."})
                 )
             : res
                 .status(404)
                 .json({ message: "The cohort with that ID does not exist." });
       });
   });
-
 // Update and existing cohort in the DB.
   cohortsRouter.put('/:id', (req, res) => {
   req.body.name
