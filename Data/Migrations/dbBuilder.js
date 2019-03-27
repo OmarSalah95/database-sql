@@ -7,6 +7,7 @@ exports.up = function(knex) {
           .string('name')
           .notNullable()
       })
+
       .createTable('students', function(students) {
         students.increments('id');
             
@@ -17,7 +18,9 @@ exports.up = function(knex) {
           .integer('cohort_id')
           .notNullable()
           .references('id')
-          .inTable('cohorts');
+          .inTable('cohorts')
+          // .onDelete("CASCADE")
+          // .onUpdate("CASCADE");
       });
   };
 
