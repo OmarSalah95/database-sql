@@ -21,11 +21,39 @@ cohortsRouter.get('/', (req, res) => {
         .where({id: req.params.id})
             .then(cohort => {
                 cohort   
-                ? res.status(200).json(cohort)
-                : res.status(404).json({message: "The cohort with the specified id does not exist."})
+                    ? res.status(200).json(cohort)
+                    : res.status(404).json({message: "The cohort with the specified id does not exist."})
             })
             .catch(err => res.status(500).json({error: "An error occurred while retrieving this cohort."}))
   })
+// Get Specified Cohorts students by ID.
+cohortsRouter.get("/:id/students", (req, res) => {
+    const cohortId = req.params.id;
+    //Verify Cohort is in the Table
+    db("cohorts")
+      .where({ id: cohortId })
+      .then(cohort => {
+        cohort
+            ?  db("students")
+                .where({ cohort_id: cohortId })
+                .then(students => {
+                    // Check if the Array is populated
+                    students.length
+                        ?  res.status(200).json(students)
+                        : res.status(404).json({message: "The cohort with that ID does not contain any students."});
+                })
+                .catch(err =>
+                    res.status(500).json({
+                        error:
+                        "An error occurred while retrieving that cohort's students."
+                    })
+                )
+            : res
+                .status(404)
+                .json({ message: "The cohort with that ID does not exist." });
+      });
+  });
+
 // Update and existing cohort in the DB.
   cohortsRouter.put('/:id', (req, res) => {
   req.body.name
