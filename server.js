@@ -10,7 +10,7 @@ server.use(helmet());
 
 // Set Routes for router
 server.use('/api/cohorts', require('./Routers/cohortsRouter'))
-// server.use('/api/students', require('./Routers/studentsRouter'))
+server.use('/api/students', require('./Routers/studentsRouter'))
 
 // Root Server directory.
 server.get('/', (req, res) => {
