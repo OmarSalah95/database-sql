@@ -9,7 +9,7 @@ server.use(require("express").json());
 server.use(helmet());
 
 // Set Routes for router
-// server.use('/api/cohorts', require('./Routers/cohortsRouter'))
+server.use('/api/cohorts', require('./Routers/cohortsRouter'))
 // server.use('/api/students', require('./Routers/studentsRouter'))
 
 // Root Server directory.
